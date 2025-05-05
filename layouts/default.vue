@@ -6,7 +6,7 @@
         <nav class="flex flex-row gap-4">
           <ULink as="button" to="/">Index</ULink>
           <ULink as="button" to="/about">About</ULink>
-          <ULink as="button" to="/auth/">Login/Register</ULink>
+          <!-- <ULink as="button" to="/auth/">Login/Register</ULink> -->
           <UButton icon="i-lucide-log-out" label="logout" @click="logout" />
         </nav>
       </div>
