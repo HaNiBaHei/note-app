@@ -1,14 +1,4 @@
-interface AuthUser {
-  id: number,
-  username: string,
-  email: string,
-  firstName: string,
-  lastName: string,
-  gender: string,
-  image: string,
-  accessToken: string,
-  refreshToken: string
-}
+import type { AuthUser } from "~/types/auth"
 
 export const useAuth = () => {
   const user = useState<AuthUser | null>('authUser', () => null)

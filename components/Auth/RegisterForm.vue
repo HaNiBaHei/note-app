@@ -38,7 +38,7 @@ import { registerSchema } from "@/utils/validation/authSchemas";
 import type { FormSubmitEvent } from "@nuxt/ui";
 import type { z } from "zod";
 
-type RegisterSchema = z.infer<typeof loginSchema>;
+type RegisterSchema = z.infer<typeof registerSchema>;
 
 const state = reactive<RegisterSchema>({
   firstName: '',

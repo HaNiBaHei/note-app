@@ -6,12 +6,12 @@
           <UTabs :items="items">
             <template #login="{ item }">
               <div class="">
-                <p>This is the {{ item.label }} tab.</p>
+                <p>This is the {{ (item as MyTabsItem).label }} tab.</p>
                 <LoginForm />
               </div>
             </template>
             <template #register="{ item }" class="w-full">
-              <p>This is the {{ item.label }} tab.</p>
+              <p>This is the {{ (item as MyTabsItem).label }} tab.</p>
 							<RegisterForm/>
             </template>
           </UTabs>
@@ -30,7 +30,12 @@ definePageMeta({
   layout: "auth",
 });
 
-const items: TabsItem[] = [
+interface MyTabsItem extends TabsItem {
+  label: string,
+  slot: 'login' | 'register'
+}
+
+const items: MyTabsItem[] = [
   {
     label: "Login",
     icon: "i-lucide-user",

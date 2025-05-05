@@ -1,6 +1,6 @@
 <template>
-    <div class="container">
-        <h1 class="text-center">Index</h1>
+    <div>
+        <p>Index</p>
     </div>
 </template>
 

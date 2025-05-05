@@ -34,6 +34,7 @@ const alertMsg = useState("alertMsg", () => "")
 import { loginSchema } from "@/utils/validation/authSchemas";
 import type { FormSubmitEvent } from "@nuxt/ui";
 import type { z } from "zod";
+import type { AuthUser } from "~/types/auth";
 
 type LoginSchema = z.infer<typeof loginSchema>;
 
@@ -41,8 +42,6 @@ const state = reactive<LoginSchema>({
   username: '',
   password: '',
 });
-
-const toast = useToast();
 
 function triggerAlert() {
   const threeSec = 3000;
@@ -55,19 +54,28 @@ function triggerAlert() {
 
 async function onSubmit(event: FormSubmitEvent<LoginSchema>) {
   const auth = useAuth()
+  
   try {
     const payload = event.data
-    const res = await $fetch('https://dummyjson.com/user/login', {
+    const res = await $fetch<AuthUser>('https://dummyjson.com/user/login', {
       method: 'POST',
       body: payload,
     })
     auth.login(res, res.accessToken)
     console.log(res);
     await navigateTo('/');
-  } catch (error) {
-    alertMsg.value = error.response?._data.message
+  } catch (error: unknown) {
+    if (error && typeof error === 'object' && 'response' in error) {
+    const err = error as { response?: { _data?: { message?: string } } }
+    alertMsg.value = err.response?._data?.message || 'Unknown error'
     triggerAlert()
-    console.log(error.response?._data.message)
+    console.log(alertMsg.value)
+  } else {
+    alertMsg.value = 'Unexpected error occurred'
+    triggerAlert()
+    console.error(error)
+  }
+    
   }
 }
 </script>
